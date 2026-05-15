@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <!-- Touch of Hope Logo - Professional Design -->
+  <!-- No background (transparent when saved as PNG) -->
+  
+  <!-- Circular hand design (orange/bronze #D97706) -->
+  <g id="hand-circle">
+    <!-- Outer arc of hand forming circle -->
+    <path d="M 400 80 A 320 320 0 0 1 650 150 L 600 200 A 270 270 0 0 0 400 130 Z" 
+          fill="#D97706" stroke="none"/>
+    
+    <!-- Left side of circle hand -->
+    <path d="M 150 400 A 320 320 0 0 1 150 650 L 200 600 A 270 270 0 0 0 200 400 Z" 
+          fill="#D97706" stroke="none"/>
+    
+    <!-- Bottom arc -->
+    <path d="M 150 650 A 320 320 0 0 1 400 720 L 400 670 A 270 270 0 0 0 200 600 Z" 
+          fill="#D97706" stroke="none"/>
+    
+    <!-- Right bottom -->
+    <path d="M 400 720 A 320 320 0 0 1 650 650 L 600 600 A 270 270 0 0 0 400 670 Z" 
+          fill="#D97706" stroke="none"/>
+  </g>
+  
+  <!-- Open palm area (lighter orange to show openness) -->
+  <ellipse cx="400" cy="420" rx="180" ry="200" fill="none" stroke="#FCA311" stroke-width="8"/>
+  
+  <!-- Leaf design (green #16A34A) -->
+  <g id="leaves">
+    <!-- Left leaf -->
+    <path d="M 350 350 Q 330 320 320 280 Q 325 310 340 330 Q 345 340 350 350" 
+          fill="#16A34A" stroke="#15803D" stroke-width="2"/>
+    
+    <!-- Center/top leaf -->
+    <path d="M 400 280 Q 390 240 380 200 L 390 250 Q 395 280 400 300 Q 405 280 410 250 L 420 200 Q 410 240 400 280" 
+          fill="#22C55E" stroke="#16A34A" stroke-width="2"/>
+    
+    <!-- Right leaf -->
+    <path d="M 450 350 Q 470 320 480 280 Q 475 310 460 330 Q 455 340 450 350" 
+          fill="#16A34A" stroke="#15803D" stroke-width="2"/>
+    
+    <!-- Small flame/light in center (orange/gold) -->
+    <ellipse cx="400" cy="310" rx="12" ry="20" fill="#FCD34D"/>
+    <ellipse cx="400" cy="305" rx="8" ry="12" fill="#FBBF24"/>
+  </g>
+  
+  <!-- Text: "Touch" -->
+  <text x="400" y="520" font-family="Georgia, serif" font-size="64" font-weight="normal" 
+        text-anchor="middle" fill="#1F2937" letter-spacing="2">Touch</text>
+  
+  <!-- Text: "of Hope" -->
+  <text x="400" y="600" font-family="Georgia, serif" font-size="64" font-weight="normal" 
+        text-anchor="middle" fill="#1F2937" letter-spacing="2">of Hope</text>
+  
+  <!-- Subtle decorative elements -->
+  <circle cx="280" cy="480" r="3" fill="#D97706" opacity="0.5"/>
+  <circle cx="520" cy="480" r="3" fill="#D97706" opacity="0.5"/>
+</svg>

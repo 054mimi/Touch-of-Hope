@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Sign In — Touch of Hope CBO</title>
+  <link rel="icon" href="favicon.ico"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
+  </style>
+</head>
+<body>
+
+<div id="toast"><span id="toast-msg"></span></div>
+
+<div class="auth-box">
+  <div class="auth-logo">
+    <img src="logo.png" alt="logo"/>
+    <h2>Touch of Hope</h2>
+    <p>Community Based Organization</p>
+  </div>
+
+  <div class="auth-tabs">
+    <div class="auth-tab active" id="tab-login"    onclick="switchAuthTab('login')">Sign In</div>
+    <div class="auth-tab"        id="tab-register" onclick="switchAuthTab('register')">Register</div>
+  </div>
+
+  <div id="form-login">
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input class="form-control" id="login-email" type="email" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-control" id="login-pass" type="password" placeholder="••••••••"
+             onkeydown="if(event.key==='Enter') doLogin()"/>
+    </div>
+    <p id="login-error" style="color:#dc3545;font-size:12px;margin-bottom:10px;min-height:16px"></p>
+    <button id="btn-login" class="btn btn-primary btn-block" onclick="doLogin()">Sign In →</button>
+    <div style="text-align:center;margin-top:12px;"><a href="#" onclick="showForgot()" style="font-size:12.5px;color:var(--brown)">Forgot password?</a></div>
+    <div class="auth-divider" style="margin-top:12px;"><span>or</span></div>
+    <a href="index.html" class="btn btn-ghost btn-block" style="margin-top:12px;">← Back to Public Site</a>
+  </div>
+
+  <div id="form-register" class="hide">
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Full Name *</label>
+        <input class="form-control" id="reg-name" placeholder="Jane Wangari"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone *</label>
+        <input class="form-control" id="reg-phone" placeholder="+254 7XX XXX XXX"/>
+      </div>
+      <div class="form-group col-span-2">
+        <label class="form-label">Email *</label>
+        <input class="form-control" id="reg-email" type="email" placeholder="your@email.com"/>
+      </div>
+      <div class="form-group col-span-2">
+        <label class="form-label">Password (min 8 characters) *</label>
+        <input class="form-control" id="reg-pass" type="password" placeholder="••••••••"/>
+      </div>
+      <div class="form-group col-span-2">
+        <label class="form-label">National ID</label>
+        <input class="form-control" id="reg-id" placeholder="National ID number"/>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-lt);margin-bottom:14px;">Your account will be reviewed and activated by the Chairperson.</p>
+    <p id="reg-error" style="color:#dc3545;font-size:12px;margin-bottom:10px;min-height:16px"></p>
+      <button id="btn-register" class="btn btn-primary btn-block" onclick="doRegister()">Submit Application →</button>
+    <a href="index.html" class="btn btn-ghost btn-block" style="margin-top:10px;">← Back to Public Site</a>
+  </div>
+
+  <!-- Forgot Password (hidden by default) -->
+  <div id="form-forgot" class="hide">
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input class="form-control" id="forgot-email" type="email" placeholder="your@email.com"/>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="doForgotPassword()">Send Reset Link</button>
+    <button class="btn btn-ghost btn-block" style="margin-top:10px" onclick="showForgot(false)">← Back to Login</button>
+  </div>
+
+</div>
+
+<script src="config.js"></script>
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="auth.js"></script>
+<script>
+  function showForgot(show=true) {
+    document.getElementById('form-login').classList.toggle('hide', show);
+    document.getElementById('form-forgot').classList.toggle('hide', !show);
+    document.getElementById('tab-login').classList.toggle('active', !show);
+  }
+
+  // Check for URL params
+  window.addEventListener('load', () => {
+    if (localStorage.getItem('toh_token') && localStorage.getItem('toh_user')) {
+      window.location.href = 'portal.html';
+    }
+    if (window.location.hash === '#register') switchAuthTab('register');
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('verified')) {
+      const errEl = document.getElementById('login-error');
+      if (errEl) { errEl.style.color='var(--green)'; errEl.textContent='✅ Email verified! You can now log in once approved.'; }
+    }
+    if (params.get('error')) {
+      const errEl = document.getElementById('login-error');
+      if (errEl) errEl.textContent='Invalid or expired verification link.';
+    }
+  });
+
+  async function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-pass').value;
+    if (!email || !pass) { toast('Enter email and password', true); return; }
+    try {
+      const r = await api('POST', '/auth/login', { email, password: pass }, false);
+      localStorage.setItem('toh_token', r.token);
+      localStorage.setItem('toh_user', JSON.stringify(r.user));
+      toast('Welcome, ' + r.user.name.split(' ')[0] + '!');
+      setTimeout(() => window.location.href = 'portal.html', 600);
+    } catch (e) { toast(e.message, true); }
+  }
+
+  async function doRegister() {
+    const name  = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const pass  = document.getElementById('reg-pass').value;
+    const phone = document.getElementById('reg-phone').value.trim();
+    if (!name || !email || !pass || !phone) { toast('Fill all required fields', true); return; }
+    try {
+      await api('POST', '/auth/register', { name, email, password: pass, phone, national_id: document.getElementById('reg-id').value }, false);
+      toast('Application submitted! Await Chairperson approval.');
+      switchAuthTab('login');
+    } catch (e) { toast(e.message, true); }
+  }
+</script>
+</body>
+</html>

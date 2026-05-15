@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background (transparent - no fill needed) -->
+  
+  <!-- Outer circle accent -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#8B6F47" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Two hands forming a heart -->
+  <!-- Left hand -->
+  <path d="M 70 90 Q 60 80 65 70 Q 70 65 75 65 Q 80 65 85 70 L 100 85 Z" fill="#8B6F47"/>
+  
+  <!-- Right hand -->
+  <path d="M 130 90 Q 140 80 135 70 Q 130 65 125 65 Q 120 65 115 70 L 100 85 Z" fill="#8B6F47"/>
+  
+  <!-- Heart shape between hands -->
+  <path d="M 100 85 Q 85 100 85 115 Q 85 135 100 145 Q 115 135 115 115 Q 115 100 100 85" fill="#2D5F4F"/>
+  
+  <!-- Organization name arc (optional - can be removed) -->
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#8B6F47">
+    TOUCH OF HOPE
+  </text>
+</svg>

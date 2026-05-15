@@ -1,0 +1,37 @@
+/* ================================================================
+   portal.css — Sidebar, topbar, portal layout
+   Touch of Hope CBO
+================================================================ */
+
+/* ── Sidebar ────────────────────────────────────────────────── */
+.sidebar        { width: var(--sidebar); background: var(--ink); position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; z-index: 200; transition: transform var(--transition); }
+.sidebar-head   { padding: 20px; border-bottom: 1px solid rgba(255,255,255,.07); display: flex; align-items: center; gap: 12px; }
+.sidebar-logo   { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--brown); background: #222; }
+.sidebar-brand h2 { font-family: 'Playfair Display', serif; font-size: 13.5px; color: var(--brown-lt); font-weight: 700; line-height: 1.3; }
+.sidebar-brand p  { font-size: 10px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 1px; }
+.sidebar-nav    { flex: 1; padding: 12px 0; overflow-y: auto; }
+.sidebar-foot   { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.07); font-size: 11px; color: rgba(255,255,255,.2); text-align: center; }
+.sidebar-role-pill { margin: 8px 20px; background: rgba(196,122,43,.15); border-radius: 6px; padding: 7px 12px; font-size: 11.5px; color: var(--brown-lt); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+.nav-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,.22); padding: 14px 20px 5px; font-weight: 600; }
+.nav-item  { display: flex; align-items: center; gap: 12px; padding: 11px 20px; cursor: pointer; color: rgba(255,255,255,.55); font-size: 13.5px; transition: all .18s; border-left: 3px solid transparent; user-select: none; }
+.nav-item:hover  { color: #fff; background: rgba(255,255,255,.05); }
+.nav-item.active { color: #fff; background: rgba(196,122,43,.18); border-left-color: var(--brown-lt); }
+
+/* ── Main layout ────────────────────────────────────────────── */
+.main    { margin-left: var(--sidebar); min-height: 100vh; display: flex; flex-direction: column; }
+.topbar  { background: var(--white); border-bottom: 1px solid var(--cream-dk); padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(30,20,8,.06); }
+.topbar-title { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; }
+.content { padding: 28px 32px; flex: 1; }
+
+/* ── Portal wrapper ─────────────────────────────────────────── */
+#portal { display: none; }
+
+/* ── Responsive portal ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sidebar      { transform: translateX(-100%); }
+  .sidebar.open { transform: none; }
+  .main         { margin-left: 0; }
+  .topbar       { padding: 0 16px; }
+  .content      { padding: 16px; }
+}

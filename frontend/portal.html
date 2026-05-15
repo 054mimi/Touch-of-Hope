@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Portal — Touch of Hope CBO</title>
+  <link rel="icon" href="favicon.ico"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css"/>
+  <link rel="stylesheet" href="portal.css"/>
+  <link rel="stylesheet" href="pages.css"/>
+</head>
+<body>
+
+<div id="toast"><span id="toast-msg"></span></div>
+
+<div id="portal" style="display:flex;">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <img class="sidebar-logo" src="logo.png" alt="logo"/>
+      <div class="sidebar-brand">
+        <h2>Touch of Hope</h2>
+        <p>CBO Portal</p>
+      </div>
+    </div>
+    <div class="sidebar-role-pill" id="sidebar-role-pill">
+      <span id="sidebar-role-icon">👤</span>
+      <span id="sidebar-role-label">Member</span>
+    </div>
+    <div class="sidebar-nav" id="sidebar-nav"></div>
+    <div class="sidebar-foot">Touch of Hope CBO © 2025</div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="flex gap-16">
+        <a href="index.html" class="btn btn-sm btn-ghost">🌐 Public Site</a>
+        <div class="flex gap-8">
+          <div class="avatar" id="user-avatar-top">?</div>
+          <div>
+            <div style="font-size:13.5px;font-weight:600;" id="user-name-top">—</div>
+            <div style="font-size:11px;color:var(--ink-lt);" id="user-role-top">—</div>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-danger" onclick="doLogout()">Sign Out</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div id="dash-hero" class="mb-28"></div>
+        <div id="dash-stats" class="grid-4 mb-20"></div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Active Campaigns</div>
+              <button class="btn btn-sm btn-outline" onclick="navigate('donate')">Donate</button>
+            </div>
+            <div id="dash-campaigns"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Announcements</div></div>
+            <div id="dash-anns"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="page" id="page-profile">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">My Profile</div>
+              <button class="btn btn-sm btn-primary" onclick="saveProfile()">Save Changes</button>
+            </div>
+            <div class="form-group"><label class="form-label">Full Name</label><input class="form-control" id="prof-name"/></div>
+            <div class="form-group"><label class="form-label">Email</label><input class="form-control" id="prof-email" disabled style="opacity:.6;"/></div>
+            <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="prof-phone"/></div>
+            <div class="form-group"><label class="form-label">Role</label><input class="form-control" id="prof-role" disabled style="opacity:.6;"/></div>
+            <div class="form-group"><label class="form-label">Membership No.</label><input class="form-control" id="prof-membership" disabled style="opacity:.6;"/></div>
+          </div>
+          <div>
+            <div class="panel mb-20">
+              <div class="panel-header"><div class="panel-title">Change Password</div></div>
+              <div class="form-group"><label class="form-label">Current Password</label><input class="form-control" id="pw-old" type="password"/></div>
+              <div class="form-group"><label class="form-label">New Password</label><input class="form-control" id="pw-new" type="password"/></div>
+              <button class="btn btn-primary btn-block" onclick="changePassword()">Update Password</button>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title">My Donations</div></div>
+              <div id="my-donations"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOLUNTEER PORTAL -->
+      <div class="page" id="page-volunteer-portal">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">My Events</div></div>
+            <div id="vol-my-events"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Available Events</div>
+              <span style="font-size:12px;color:var(--ink-lt);">Click to join</span>
+            </div>
+            <div id="vol-avail-events"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:20px;">
+          <div class="panel-header"><div class="panel-title">Volunteer Application / Update Skills</div></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Skills (comma-separated)</label>
+              <input class="form-control" id="vol-skills" placeholder="Teaching, Medical, IT, Construction"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Availability</label>
+              <select class="form-control" id="vol-avail">
+                <option>weekends</option><option>weekdays</option><option>full-time</option><option>flexible</option>
+              </select>
+            </div>
+            <div class="form-group col-span-2">
+              <label class="form-label">Brief Bio</label>
+              <textarea class="form-control" id="vol-bio" placeholder="Tell us about yourself…"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="submitVolApp()">Submit Application</button>
+        </div>
+      </div>
+
+      <!-- DONATE -->
+      <div class="page" id="page-donate">
+        <div class="pay-hero">
+          <h2>Make a Donation</h2>
+          <p>Your generosity directly impacts lives — orphaned children, families in need, and persons with disabilities.</p>
+        </div>
+        <div class="grid-2">
+          <div>
+            <div class="panel mb-20">
+              <div class="panel-header"><div class="panel-title">1. Choose a Campaign</div></div>
+              <div id="pay-campaigns"></div>
+              <div style="margin-top:12px;font-size:13px;color:var(--ink-lt);">Or donate to the <strong>General Fund</strong></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title">2. Enter Amount</div></div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+                <button class="btn btn-ghost" onclick="setAmount(500)">KSh 500</button>
+                <button class="btn btn-ghost" onclick="setAmount(1000)">KSh 1,000</button>
+                <button class="btn btn-ghost" onclick="setAmount(2500)">KSh 2,500</button>
+                <button class="btn btn-ghost" onclick="setAmount(5000)">KSh 5,000</button>
+              </div>
+              <div class="form-group input-prefix">
+                <label class="form-label">Amount (KSh)</label>
+                <span>KSh</span>
+                <input class="form-control" id="pay-amount" type="number" placeholder="Enter amount" min="10"/>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="panel mb-20">
+              <div class="panel-header"><div class="panel-title">3. Payment Method</div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+                <div class="campaign-card selected" id="pm-mpesa" onclick="selectPayMethod('mpesa')" style="text-align:center;padding:14px;">
+                  <div style="font-size:20px;">📱</div><div style="font-size:11.5px;font-weight:700;margin-top:4px;">M-Pesa</div>
+                </div>
+                <div class="campaign-card" id="pm-stripe" onclick="selectPayMethod('stripe')" style="text-align:center;padding:14px;">
+                  <div style="font-size:20px;">💳</div><div style="font-size:11.5px;font-weight:700;margin-top:4px;">Card</div>
+                </div>
+                <div class="campaign-card" id="pm-paypal" onclick="selectPayMethod('paypal')" style="text-align:center;padding:14px;">
+                  <div style="font-size:20px;">🅿️</div><div style="font-size:11.5px;font-weight:700;margin-top:4px;">PayPal</div>
+                </div>
+                <div class="campaign-card" id="pm-bank" onclick="selectPayMethod('bank')" style="text-align:center;padding:14px;">
+                  <div style="font-size:20px;">🏦</div><div style="font-size:11.5px;font-weight:700;margin-top:4px;">Bank</div>
+                </div>
+              </div>
+              <div id="mpesa-form">
+                <div class="form-group"><label class="form-label">Your Name</label><input class="form-control" id="pay-name-mpesa" placeholder="Full name"/></div>
+                <div class="form-group"><label class="form-label">M-Pesa Phone Number</label><input class="form-control" id="pay-phone" placeholder="0712345678 or +254712345678"/></div>
+                <div style="background:var(--cream);border-radius:9px;padding:14px;margin-bottom:16px;">
+                  <div class="mpesa-step"><div class="mpesa-step-num">1</div><div style="font-size:13px;">Enter your M-Pesa number and click <strong>Pay Now</strong></div></div>
+                  <div class="mpesa-step"><div class="mpesa-step-num">2</div><div style="font-size:13px;">An STK push will be sent to your phone</div></div>
+                  <div class="mpesa-step"><div class="mpesa-step-num">3</div><div style="font-size:13px;">Enter your M-Pesa PIN to complete payment</div></div>
+                </div>
+                <button class="btn btn-success btn-block btn-lg" onclick="initiateMpesa()">💚 Pay Now via M-Pesa</button>
+              </div>
+              <!-- Stripe card form -->
+              <div id="stripe-form" class="hide">
+                <div class="form-group"><label class="form-label">Your Name</label><input class="form-control" id="pay-name-stripe" placeholder="Full name"/></div>
+                <div class="form-group"><label class="form-label">Email (for receipt)</label><input class="form-control" id="pay-email-stripe" type="email" placeholder="your@email.com"/></div>
+                <div id="stripe-form-inner" class="hide">
+                  <div id="stripe-payment-element" style="margin-bottom:16px;"></div>
+                  <button id="stripe-submit-btn" class="btn btn-primary btn-block hide" onclick="confirmStripePayment()">Pay with Card →</button>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="initiateStripe()" style="margin-bottom:8px;">Load Secure Payment Form →</button>
+              </div>
+              <!-- PayPal form -->
+              <div id="paypal-form" class="hide">
+                <p style="font-size:13.5px;color:var(--ink-lt);margin-bottom:16px;">You will be redirected to PayPal to complete your payment securely. Amount will be converted to USD at current rates.</p>
+                <button class="btn btn-primary btn-block" onclick="initiatePaypal()">🅿️ Continue with PayPal →</button>
+              </div>
+              <div id="bank-form" class="hide">
+                <div style="background:var(--cream);border-radius:9px;padding:18px;">
+                  <p style="font-size:13.5px;font-weight:700;margin-bottom:10px;">Bank Transfer Details</p>
+                  <p style="font-size:13px;color:var(--ink-lt);">Bank: <strong>Equity Bank Kenya</strong></p>
+                  <p style="font-size:13px;color:var(--ink-lt);">Account Name: <strong>Touch of Hope CBO</strong></p>
+                  <p style="font-size:13px;color:var(--ink-lt);">Account No: <strong>0450292893819</strong></p>
+                  <p style="font-size:13px;color:var(--ink-lt);">Branch: <strong>Nairobi CBD</strong></p>
+                  <p style="font-size:13px;margin-top:10px;color:var(--ink-lt);">After transfer, email proof to <strong>treasurer@touchofhope.org</strong></p>
+                </div>
+              </div>
+              <div id="stripe-form" class="hide">
+                <div class="form-group"><label class="form-label">Your Name</label><input class="form-control" id="pay-name-stripe" placeholder="Full name"/></div>
+                <div class="form-group"><label class="form-label">Email (for receipt)</label><input class="form-control" id="pay-email-stripe" type="email" placeholder="your@email.com"/></div>
+                <div class="form-group">
+                  <label class="form-label">Card Details</label>
+                  <div id="stripe-card-element" style="padding:11px 14px;border:1.5px solid var(--cream-dk);border-radius:9px;background:#fff;"></div>
+                  <p id="stripe-card-errors" style="color:#dc3545;font-size:12px;margin-top:4px"></p>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg" onclick="initiateStripe()">💳 Pay with Card</button>
+                <p style="font-size:11px;color:var(--ink-lt);text-align:center;margin-top:8px">🔒 Secured by Stripe · Apple Pay & Google Pay also accepted</p>
+              </div>
+              <div id="paypal-form" class="hide">
+                <p style="font-size:13.5px;color:var(--ink-lt);margin-bottom:16px;">You will be redirected to PayPal to complete your payment. Your donation amount will be converted to USD.</p>
+                <button class="btn btn-primary btn-block btn-lg" onclick="initiatePaypal()" style="background:#003087;">🅿️ Pay with PayPal</button>
+                <p style="font-size:11px;color:var(--ink-lt);text-align:center;margin-top:8px">PayPal · Credit & Debit Cards · Crypto accepted via PayPal</p>
+              </div>
+            </div>
+            <div id="pay-status-box" class="hide panel">
+              <div class="pay-status">
+                <div class="spinner" id="pay-spinner"></div>
+                <p id="pay-status-msg" style="font-size:15px;font-weight:600;">Processing payment…</p>
+                <p id="pay-status-sub" style="font-size:13px;color:var(--ink-lt);margin-top:6px;"></p>
+                <button class="btn btn-ghost btn-sm" style="margin-top:16px;" onclick="checkPaymentStatus()">Check Status</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USERS -->
+      <div class="page" id="page-users">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">User Management</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>User</th><th>Role</th><th>Phone</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAMPAIGNS -->
+      <div class="page" id="page-campaigns">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Fundraising Campaigns</div>
+            <button class="btn btn-primary" onclick="openModal('modal-campaign')">+ New Campaign</button>
+          </div>
+          <div id="campaigns-list" class="grid-2"></div>
+        </div>
+      </div>
+
+      <!-- EVENTS -->
+      <div class="page" id="page-events">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Events & Activities</div>
+            <button class="btn btn-primary" onclick="openModal('modal-event')">+ Create Event</button>
+          </div>
+          <div id="events-list" class="grid-3"></div>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="page" id="page-projects">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Community Projects</div>
+            <button class="btn btn-primary" onclick="openModal('modal-project')">+ New Project</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Project</th><th>Location</th><th>Status</th><th>Impact</th><th>Actions</th></tr></thead>
+              <tbody id="projects-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINANCES -->
+      <div class="page" id="page-finances">
+        <div class="grid-4 mb-20" id="fin-stats"></div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Donation Records</div>
+            <button class="btn btn-primary" onclick="openModal('modal-donation')">+ Record Donation</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Donor</th><th>Campaign</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody id="donations-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANNOUNCEMENTS -->
+      <div class="page" id="page-announcements">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Announcements Board</div>
+            <button class="btn btn-primary" onclick="openModal('modal-ann')">+ Post Announcement</button>
+          </div>
+          <div id="anns-list"></div>
+        </div>
+      </div>
+
+      <!-- VOLUNTEERS -->
+      <div class="page" id="page-volunteers">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Volunteer Management</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Volunteer</th><th>Skills</th><th>Availability</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="vols-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- BACKUP -->
+      <div class="page" id="page-backup">
+        <div class="grid-2">
+          <div>
+            <div class="panel mb-20">
+              <div class="panel-header"><div class="panel-title">⚙️ Backup Configuration</div></div>
+              <p style="font-size:13px;color:var(--ink-lt);margin-bottom:18px;">Set the frequency and destinations for automatic database backups.</p>
+              <p style="font-size:12px;font-weight:700;color:var(--ink-lt);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">Backup Frequency</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+                <button class="freq-btn active" id="freq-daily"   onclick="setFreq('daily')">Daily</button>
+                <button class="freq-btn"        id="freq-weekly"  onclick="setFreq('weekly')">Weekly</button>
+                <button class="freq-btn"        id="freq-hourly"  onclick="setFreq('hourly')">Hourly</button>
+                <button class="freq-btn"        id="freq-monthly" onclick="setFreq('monthly')">Monthly</button>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Backup Time (24h)</label>
+                <input class="form-control" id="backup-time" type="time" value="02:00"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Retain backups for (days)</label>
+                <input class="form-control" id="backup-retention" type="number" value="30" min="7" max="365"/>
+              </div>
+              <p style="font-size:12px;font-weight:700;color:var(--ink-lt);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;">Destinations</p>
+              <div class="backup-option enabled mb-20" id="opt-local">
+                <div class="backup-toggle on" id="toggle-local" onclick="toggleBackupDest('local')"></div>
+                <div>
+                  <p style="font-size:14px;font-weight:700;">💾 Local Backup</p>
+                  <p style="font-size:12.5px;color:var(--ink-lt);">Saved to server filesystem · Auto-pruned after retention period</p>
+                </div>
+              </div>
+              <div class="backup-option mb-20" id="opt-cloud">
+                <div class="backup-toggle" id="toggle-cloud" onclick="toggleBackupDest('cloud')"></div>
+                <div style="flex:1;">
+                  <p style="font-size:14px;font-weight:700;">☁️ Cloud Backup</p>
+                  <p style="font-size:12.5px;color:var(--ink-lt);">Upload to cloud storage</p>
+                  <div style="margin-top:12px;" id="cloud-config" class="hide">
+                    <div class="form-group">
+                      <label class="form-label">Cloud Provider</label>
+                      <select class="form-control" id="cloud-provider">
+                        <option value="gcs">Google Cloud Storage</option>
+                        <option value="s3">AWS S3</option>
+                        <option value="azure">Azure Blob Storage</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Bucket / Container Name</label>
+                      <input class="form-control" id="cloud-bucket" placeholder="toh-backups-2025"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;">
+                <button class="btn btn-primary" onclick="saveBackupConfig()">Save Configuration</button>
+                <button class="btn btn-outline" onclick="runManualBackup()">▶ Run Backup Now</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="panel mb-20">
+              <div class="panel-header">
+                <div class="panel-title">🗃️ Backup History</div>
+                <button class="btn btn-sm btn-ghost" onclick="loadBackupHistory()">↻ Refresh</button>
+              </div>
+              <div id="backup-history"><div style="text-align:center;padding:24px;color:var(--ink-lt);font-size:13px;">Loading…</div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title">♻️ Restore Database</div></div>
+              <div style="background:#fff3cd;border-radius:9px;padding:14px;margin-bottom:16px;">
+                <p style="font-size:13px;color:#856404;font-weight:600;">⚠️ Warning</p>
+                <p style="font-size:12.5px;color:#856404;margin-top:4px;">Restoring will OVERWRITE the current database. A safety snapshot is automatically created before every restore.</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Select Backup to Restore</label>
+                <select class="form-control" id="restore-select"><option value="">— Choose a backup —</option></select>
+              </div>
+              <button class="btn btn-danger" onclick="doRestore()">♻️ Restore Selected Backup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONSTITUTION -->
+      <div class="page" id="page-constitution">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">📜 Constitution of Touch of Hope CBO</div></div>
+          <div style="background:var(--cream);border-radius:9px;padding:16px 20px;margin-bottom:20px;font-size:13.5px;line-height:1.75;color:var(--ink-lt);">
+            <strong style="color:var(--ink);">PREAMBLE:</strong> We members of Touch of Hope Community Based Organization, desiring to establish a community based organization in Kenya for the purpose of promoting social and economic development, supporting needy orphaned children, less privileged families and promoting unity while sharing love through our actions, do hereby adopt and give to ourselves this constitution.
+          </div>
+          <div id="constitution-list"></div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /portal -->
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-campaign"><div class="modal">
+  <div class="modal-header"><div class="modal-title">New Fundraising Campaign</div><button class="modal-close" onclick="closeModal('modal-campaign')">✕</button></div>
+  <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="c-title"/></div>
+  <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="c-desc"></textarea></div>
+  <div class="form-grid">
+    <div class="form-group"><label class="form-label">Target (KSh) *</label><input type="number" class="form-control" id="c-target"/></div>
+    <div class="form-group"><label class="form-label">End Date</label><input type="date" class="form-control" id="c-end"/></div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-campaign')">Cancel</button><button class="btn btn-success" onclick="saveCampaign()">Launch Campaign</button></div>
+</div></div>
+
+<div class="modal-overlay" id="modal-event"><div class="modal">
+  <div class="modal-header"><div class="modal-title">Create Event</div><button class="modal-close" onclick="closeModal('modal-event')">✕</button></div>
+  <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="e-title"/></div>
+  <div class="form-grid">
+    <div class="form-group"><label class="form-label">Date *</label><input type="date" class="form-control" id="e-date"/></div>
+    <div class="form-group"><label class="form-label">Location</label><input class="form-control" id="e-loc"/></div>
+    <div class="form-group"><label class="form-label">Volunteers Needed</label><input type="number" class="form-control" id="e-vols" value="5"/></div>
+  </div>
+  <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="e-desc"></textarea></div>
+  <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-event')">Cancel</button><button class="btn btn-primary" onclick="saveEvent()">Create Event</button></div>
+</div></div>
+
+<div class="modal-overlay" id="modal-project"><div class="modal">
+  <div class="modal-header"><div class="modal-title">New Community Project</div><button class="modal-close" onclick="closeModal('modal-project')">✕</button></div>
+  <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="p-title"/></div>
+  <div class="form-grid">
+    <div class="form-group"><label class="form-label">Location</label><input class="form-control" id="p-loc"/></div>
+    <div class="form-group"><label class="form-label">Start Date</label><input type="date" class="form-control" id="p-start"/></div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-control" id="p-status"><option>planning</option><option>active</option><option>completed</option><option>on-hold</option></select>
+    </div>
+  </div>
+  <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="p-desc"></textarea></div>
+  <div class="form-group"><label class="form-label">Impact Summary</label><input class="form-control" id="p-impact" placeholder="e.g. 50 children supported"/></div>
+  <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-project')">Cancel</button><button class="btn btn-primary" onclick="saveProject()">Save Project</button></div>
+</div></div>
+
+<div class="modal-overlay" id="modal-ann"><div class="modal">
+  <div class="modal-header"><div class="modal-title">Post Announcement</div><button class="modal-close" onclick="closeModal('modal-ann')">✕</button></div>
+  <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="a-title"/></div>
+  <div class="form-group"><label class="form-label">Content *</label><textarea class="form-control" id="a-content" style="min-height:120px;"></textarea></div>
+  <div class="form-group" style="flex-direction:row;align-items:center;gap:10px;">
+    <input type="checkbox" id="a-public" checked style="width:16px;height:16px;accent-color:var(--brown);cursor:pointer;"/>
+    <label style="font-size:13px;cursor:pointer;" for="a-public">Visible on public website</label>
+  </div>
+  <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-ann')">Cancel</button><button class="btn btn-primary" onclick="saveAnnouncement()">Post</button></div>
+</div></div>
+
+<div class="modal-overlay" id="modal-donation"><div class="modal">
+  <div class="modal-header"><div class="modal-title">Record Donation</div><button class="modal-close" onclick="closeModal('modal-donation')">✕</button></div>
+  <div class="form-grid">
+    <div class="form-group"><label class="form-label">Donor Name *</label><input class="form-control" id="d-donor"/></div>
+    <div class="form-group"><label class="form-label">Donor Email (for receipt)</label><input class="form-control" id="d-email" type="email" placeholder="optional"/></div>
+    <div class="form-group"><label class="form-label">Amount (KSh) *</label><input type="number" class="form-control" id="d-amount"/></div>
+    <div class="form-group"><label class="form-label">Campaign</label>
+      <select class="form-control" id="d-campaign"><option value="">General Fund</option></select>
+    </div>
+    <div class="form-group"><label class="form-label">Method</label>
+      <select class="form-control" id="d-method"><option value="mpesa">M-Pesa</option><option value="bank">Bank</option><option value="cash">Cash</option><option value="card">Card</option></select>
+    </div>
+    <div class="form-group"><label class="form-label">Reference / Receipt</label><input class="form-control" id="d-ref"/></div>
+    <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-control" id="d-date"/></div>
+    <div class="form-group col-span-2"><label class="form-label">Notes</label><input class="form-control" id="d-notes" placeholder="Optional notes"/></div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-donation')">Cancel</button><button class="btn btn-success" onclick="recordDonation()">Record</button></div>
+</div></div>
+
+<!-- SCRIPTS — all flat in same directory -->
+<script src="https://js.stripe.com/v3/"></script>
+<script src="config.js"></script>
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="auth.js"></script>
+<script src="portal.js"></script>
+<script src="page.public.js"></script>
+<script src="page.dashboard.js"></script>
+<script src="page.profile.js"></script>
+<script src="page.donate.js"></script>
+<script src="page.admin.js"></script>
+<script src="page.backup.js"></script>
+<script src="page.constitution.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    const token = localStorage.getItem('toh_token');
+    const user  = localStorage.getItem('toh_user');
+    if (!token || !user) { window.location.href = 'login.html'; return; }
+    authToken   = token;
+    currentUser = JSON.parse(user);
+    buildSidebar();
+    navigate('dashboard');
+  });
+
+  function doLogout() {
+    localStorage.removeItem('toh_token');
+    localStorage.removeItem('toh_user');
+    window.location.href = 'login.html';
+  }
+</script>
+</body>
+</html>

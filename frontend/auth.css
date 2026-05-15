@@ -1,0 +1,22 @@
+/* ================================================================
+   auth.css — Login & Registration page
+   Touch of Hope CBO
+================================================================ */
+
+#auth-page        { display: none; min-height: 100vh; background: var(--cream); }
+#auth-page.active { display: flex; align-items: center; justify-content: center; padding: 24px; }
+
+.auth-box       { background: var(--white); border-radius: 20px; box-shadow: var(--shadow-lg); width: 100%; max-width: 460px; padding: 40px; }
+
+.auth-logo      { text-align: center; margin-bottom: 28px; }
+.auth-logo img  { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 10px; border: 3px solid var(--brown); }
+.auth-logo h2   { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; }
+.auth-logo p    { font-size: 13px; color: var(--ink-lt); margin-top: 2px; }
+
+.auth-tabs      { display: flex; background: var(--cream); border-radius: 9px; padding: 3px; margin-bottom: 24px; }
+.auth-tab       { flex: 1; text-align: center; padding: 9px; border-radius: 7px; cursor: pointer; font-size: 13.5px; font-weight: 500; color: var(--ink-lt); transition: all .18s; }
+.auth-tab.active { background: var(--white); color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,.08); font-weight: 600; }
+
+.auth-divider         { text-align: center; color: var(--ink-lt); font-size: 12px; margin: 12px 0; position: relative; }
+.auth-divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--cream-dk); }
+.auth-divider span    { background: var(--white); padding: 0 12px; position: relative; }

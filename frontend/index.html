@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Touch of Hope CBO</title>
+  <link rel="icon" href="favicon.ico"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css"/>
+  <link rel="stylesheet" href="public.css"/>
+</head>
+<body>
+
+<div id="loading">
+  <img src="logo.png" alt="logo" style="background-color: #fff;"/>
+  <p>Loading Touch of Hope…</p>
+</div>
+<div id="toast"><span id="toast-msg"></span></div>
+
+<div id="public-site" class="active">
+  <nav class="pub-nav">
+    <div class="pub-nav-brand">
+      <img src="logo.png" alt="logo"  style="background-color: #fff;"/>
+      <h1>Touch of Hope</h1>
+    </div>
+    <div class="pub-nav-links">
+      <span class="pub-nav-link" onclick="scrollToSection('pub-about')">About</span>
+      <span class="pub-nav-link" onclick="scrollToSection('pub-campaigns-sec')">Campaigns</span>
+      <span class="pub-nav-link" onclick="scrollToSection('pub-events-sec')">Events</span>
+      <span class="pub-nav-link" onclick="scrollToSection('pub-projects-sec')">Projects</span>
+      <a href="login.html" class="btn btn-primary btn-sm">Donate / Login</a>
+    </div>
+  </nav>
+
+  <section class="pub-hero">
+    <img class="pub-hero-logo" src="logo.png" alt="logo"/>
+    <h1>Spreading <span>Hope</span>,<br/>Changing Lives</h1>
+    <p>Touch of Hope CBO is a community-based organization dedicated to supporting orphaned children, less privileged families, and persons with disabilities across Kenya.</p>
+    <div class="pub-hero-btns">
+      <a href="login.html" class="btn btn-primary btn-lg btn-pill">💛 Donate Now</a>
+      <a href="login.html#register" class="btn btn-outline btn-lg btn-pill" style="color:#fff;border-color:rgba(255,255,255,.4);">Join as Member</a>
+    </div>
+  </section>
+
+  <section class="pub-section" style="padding-bottom:0;">
+    <div class="pub-stats">
+      <div class="pub-stat"><div class="num" id="ps-members">47</div><div class="lbl">Active Members</div></div>
+      <div class="pub-stat"><div class="num" id="ps-raised">KSh 284K</div><div class="lbl">Funds Raised</div></div>
+      <div class="pub-stat"><div class="num" id="ps-campaigns">4</div><div class="lbl">Active Campaigns</div></div>
+      <div class="pub-stat"><div class="num" id="ps-vols">23</div><div class="lbl">Volunteers</div></div>
+    </div>
+  </section>
+
+  <section class="pub-section" id="pub-about" style="padding-top:40px;padding-bottom:20px;">
+    <h2 class="pub-section-title">Latest Updates</h2>
+    <p class="pub-section-sub">Stay informed about our activities and announcements</p>
+    <div id="pub-announcements" class="grid-2"></div>
+  </section>
+
+  <section class="pub-section" id="pub-campaigns-sec">
+    <h2 class="pub-section-title">Active Campaigns</h2>
+    <p class="pub-section-sub">Every contribution makes a difference</p>
+    <div id="pub-campaigns" class="grid-3"></div>
+  </section>
+
+  <section class="pub-section" id="pub-events-sec" style="background:var(--cream-dk);">
+    <h2 class="pub-section-title">Upcoming Events</h2>
+    <p class="pub-section-sub">Join us in community activities</p>
+    <div id="pub-events" class="grid-3"></div>
+  </section>
+
+  <section class="pub-section" id="pub-projects-sec">
+    <h2 class="pub-section-title">Our Projects</h2>
+    <p class="pub-section-sub">Ongoing community initiatives</p>
+    <div id="pub-projects" class="grid-3"></div>
+  </section>
+
+  <footer class="pub-footer">
+    <p>© 2025 Touch of Hope Community Based Organization · Nairobi, Kenya</p>
+    <p style="margin-top:6px;">Registered CBO · <span style="color:var(--brown-lt);">chairman@touchofhope.org</span></p>
+  </footer>
+</div>
+
+<script src="config.js"></script>
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="page.public.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const l = document.getElementById('loading');
+      l.style.transition = 'opacity .3s';
+      l.style.opacity = '0';
+      setTimeout(() => l.style.display = 'none', 300);
+    }, 900);
+    loadPublicSite();
+  });
+</script>
+</body>
+</html>
